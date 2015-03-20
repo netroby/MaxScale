@@ -1,14 +1,10 @@
-How to make MaxScale High Available
-
-Corosync/Pacemaker setup 
-
-& MaxScale init script
+# How to make MaxScale High Available Corosync/Pacemaker setup & MaxScale init script
 
 Massimiliano Pinto
 
 Last Updated: 4th August 2014
 
-# Contents
+## Contents
 
 [Contents](#heading=h.myvf4p2ngdc5)
 
@@ -26,7 +22,7 @@ Last Updated: 4th August 2014
 
 [Add a Virtual IP (VIP) to the cluster](#heading=h.vzslsgvxjyug)
 
-# Overview
+## Overview
 
 The document shows an example of a Pacemaker / Corosync setup with MaxScale based on Linux Centos 6.5, using three virtual servers and unicast heartbeat mode with the following minimum requirements:
 
@@ -38,13 +34,13 @@ The document shows an example of a Pacemaker / Corosync setup with MaxScale base
 
 Please note the solution is a quick setup example that may not be suited for all production environments.
 
-# Clustering Software installation
+## Clustering Software installation
 
 On each node in the cluster do the following steps:
 
 (1) Add clustering repos to yum
 
-# vi /etc/yum.repos.d/ha-clustering.repo
+## vi /etc/yum.repos.d/ha-clustering.repo
 
 Add the following to the file 
 
@@ -60,7 +56,7 @@ gpgcheck=0
 
 (2) Install the software 
 
-# yum install pacemaker corosync crmsh
+## yum install pacemaker corosync crmsh
 
 Package versions used
 
@@ -78,11 +74,11 @@ In this example the three names used for the nodes are:
 
 	**node1,node,node3**
 
-# hostname **node1**
+## hostname **node1**
 
 ...
 
-# hostname nodeN
+## hostname nodeN
 
 (4) For each node add server names in /etc/hosts
 
@@ -124,7 +120,7 @@ Using node2 as an example:
 
 Add the following to the file:
 
-# Please read the corosync.conf.5 manual page
+## Please read the corosync.conf.5 manual page
 
 compatibility: whitetank
 
@@ -192,7 +188,7 @@ logging {
 
 }
 
-# this will start Pacemaker processes
+## this will start Pacemaker processes
 
 service {
 
@@ -334,7 +330,7 @@ property cib-bootstrap-options: \
 
 The Corosync / Pacemaker cluster is ready to be configured to manage resources.
 
-# MaxScale init script /etc/init.d/maxscale
+## MaxScale init script /etc/init.d/maxscale
 
 The MaxScale /etc/init.d./maxscale script allows to start/stop/restart and monitor maxScale process running in the system.
 
@@ -402,7 +398,7 @@ For more informations;
 
 After checking maxScale is well managed by the /etc/init.d/script is possible to configure the MAxScale HA via Pacemaker.
 
-# Configure MaxScale for HA with Pacemaker
+## Configure MaxScale for HA with Pacemaker
 
 [root@node2 ~]# crm configure primitive MaxScale lsb:maxscale \
 
@@ -436,7 +432,7 @@ Online: [ node1 node2 node3 ]
 
 Basic use cases:
 
-# 1. Resource restarted after a failure:
+## 1. Resource restarted after a failure:
 
 MaxScale Pid is, $MAXSCALE_PIDFILE=$MAXSCALE_HOME/log/maxscale.pid
 
@@ -490,7 +486,7 @@ Online: [ node1 node2 node3 ]
 
  MaxScale	(lsb:maxscale):	Started node1 
 
-# 2. The resource cannot be migrated to node1 for a failure:
+## 2. The resource cannot be migrated to node1 for a failure:
 
 First, migrate the the resource to another node, say node3
 
@@ -566,7 +562,7 @@ Online: [ node1 node2 node3 ]
 
  MaxScale	(lsb:maxscale):	Started node2
 
-# Add a Virtual IP (VIP) to the cluster
+## Add a Virtual IP (VIP) to the cluster
 
 It’s possible to add a virtual IP to the cluster:
 
