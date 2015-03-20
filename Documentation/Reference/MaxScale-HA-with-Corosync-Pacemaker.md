@@ -40,7 +40,9 @@ On each node in the cluster do the following steps:
 
 (1) Add clustering repos to yum
 
-## vi /etc/yum.repos.d/ha-clustering.repo
+```bash
+# vi /etc/yum.repos.d/ha-clustering.repo
+```
 
 Add the following to the file 
 
@@ -56,7 +58,9 @@ gpgcheck=0
 
 (2) Install the software 
 
-## yum install pacemaker corosync crmsh
+```bash
+# yum install pacemaker corosync crmsh
+```
 
 Package versions used
 
@@ -74,11 +78,15 @@ In this example the three names used for the nodes are:
 
 	**node1,node,node3**
 
-## hostname **node1**
+```bash
+# hostname **node1**
+```
 
 ...
 
+```bash
 ## hostname nodeN
+```
 
 (4) For each node add server names in /etc/hosts
 
@@ -119,8 +127,9 @@ Using node2 as an example:
 [root@node2 ~]# vi /etc/corosync/corosync.conf
 
 Add the following to the file:
+```
 
-## Please read the corosync.conf.5 manual page
+# Please read the corosync.conf.5 manual page
 
 compatibility: whitetank
 
@@ -188,7 +197,7 @@ logging {
 
 }
 
-## this will start Pacemaker processes
+# this will start Pacemaker processes
 
 service {
 
@@ -197,6 +206,7 @@ ver: 0
 name: pacemaker
 
 }
+```
 
 **Please note **in this example:
 
@@ -330,6 +340,7 @@ property cib-bootstrap-options: \
 
 The Corosync / Pacemaker cluster is ready to be configured to manage resources.
 
+
 ## MaxScale init script /etc/init.d/maxscale
 
 The MaxScale /etc/init.d./maxscale script allows to start/stop/restart and monitor maxScale process running in the system.
@@ -432,7 +443,7 @@ Online: [ node1 node2 node3 ]
 
 Basic use cases:
 
-## 1. Resource restarted after a failure:
+### 1. Resource restarted after a failure:
 
 MaxScale Pid is, $MAXSCALE_PIDFILE=$MAXSCALE_HOME/log/maxscale.pid
 
@@ -486,7 +497,7 @@ Online: [ node1 node2 node3 ]
 
  MaxScale	(lsb:maxscale):	Started node1 
 
-## 2. The resource cannot be migrated to node1 for a failure:
+### 2. The resource cannot be migrated to node1 for a failure:
 
 First, migrate the the resource to another node, say node3
 
